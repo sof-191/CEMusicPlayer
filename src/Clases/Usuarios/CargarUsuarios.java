@@ -2,10 +2,9 @@ package Clases.Usuarios;
 
 import Clases.Bibliotecas.Bibliotecas;
 import Clases.Canciones.Canciones;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Text;
+import Clases.Canciones.ListaDobleEnlazada;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +13,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
 
 public class CargarUsuarios {
     public static void guardarListaUsuarios(Clases.Usuarios.ListaSimple listaSimpleUsuarios){
@@ -61,7 +61,7 @@ public class CargarUsuarios {
                     Text tidBiblioteca = document.createTextNode(bibliotecaGuardar.getId());
                     idBiblioteca.appendChild(tidBiblioteca);
 
-                    Element nombreBiblioteca = document.createElement("id");
+                    Element nombreBiblioteca = document.createElement("nombre");
                     Text tnombreBiblioteca = document.createTextNode(bibliotecaGuardar.getNombre());
                     nombreBiblioteca.appendChild(tnombreBiblioteca);
 
@@ -96,7 +96,7 @@ public class CargarUsuarios {
                             Text talbumCancion = document.createTextNode(cancionGuardar.getAlbum());
                             albumCancion.appendChild(talbumCancion);
 
-                            Element anioCancion = document.createElement("album");
+                            Element anioCancion = document.createElement("anio");
                             Text tanioCancion = document.createTextNode(cancionGuardar.getAnio());
                             anioCancion.appendChild(tanioCancion);
 
@@ -148,6 +148,117 @@ public class CargarUsuarios {
             transformer.transform(source,result);
 
         } catch (ParserConfigurationException | TransformerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Clases.Usuarios.ListaSimple cargarListaUsuarios(){
+        Clases.Usuarios.ListaSimple lista = null;
+        try {
+            lista = new ListaSimple();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            Document document = builder.parse(new File("XML/users.xml"));
+
+            NodeList listaUsuarios = document.getElementsByTagName("usuario");
+
+            for (int i = 0; i < listaUsuarios.getLength(); i++) {
+                Node usuario = listaUsuarios.item(i);
+                Usuarios usuarioGuardar = new Usuarios("","","","",new Clases.Bibliotecas.ListaSimple());
+                if(usuario.getNodeType() == Node.ELEMENT_NODE){
+                    Element element = (Element) usuario;
+                    NodeList datosUsuario = element.getChildNodes();
+                    for (int j = 0; j < datosUsuario.getLength(); j++) {
+                        Node datoUsuario =  datosUsuario.item(j);
+                        if (datoUsuario.getNodeType()==Node.ELEMENT_NODE){
+                            if(datoUsuario.getNodeName().equals("email")){
+                                usuarioGuardar.setCorreoElectronico(datoUsuario.getTextContent());
+                            }
+                            if(datoUsuario.getNodeName().equals("nombre")){
+                                usuarioGuardar.setNombre(datoUsuario.getTextContent());
+                            }
+                            if(datoUsuario.getNodeName().equals("provincia")){
+                                usuarioGuardar.setProvincia(datoUsuario.getTextContent());
+                            }
+                            if(datoUsuario.getNodeName().equals("contrasena")){
+                                usuarioGuardar.setContrasena(datoUsuario.getTextContent());
+                            }
+                            if(datoUsuario.getNodeName().equals("bibliotecas")){
+                                Clases.Bibliotecas.ListaSimple listaBibliotecaGuardar = new Clases.Bibliotecas.ListaSimple();
+                                NodeList listaBiblioteca = datoUsuario.getChildNodes();
+                                for (int k = 0; k < listaBiblioteca.getLength(); k++) {
+                                    Node biblioteca = listaBiblioteca.item(k);
+                                    Bibliotecas bibliotecaGuardar = new Bibliotecas("","",new ListaDobleEnlazada());
+                                    if (biblioteca.getNodeType()==Node.ELEMENT_NODE){
+                                        Element element1 = (Element) biblioteca;
+                                        NodeList datosBiblioteca = biblioteca.getChildNodes();
+                                        for (int l = 0; l < datosBiblioteca.getLength(); l++) {
+                                            Node datoBiblioteca = datosBiblioteca.item(l);
+                                            if (datoBiblioteca.getNodeType()==Node.ELEMENT_NODE){
+                                                if (datoBiblioteca.getNodeName().equals("id")){
+                                                    bibliotecaGuardar.setId(datoBiblioteca.getTextContent());
+                                                }
+                                                if (datoBiblioteca.getNodeName().equals("nombre")){
+                                                    bibliotecaGuardar.setNombre(datoBiblioteca.getTextContent());
+                                                }
+                                                if (datoBiblioteca.getNodeName().equals("canciones")){
+                                                    ListaDobleEnlazada listaCancionesGuardar = new ListaDobleEnlazada();
+                                                    NodeList listaCanciones = datoBiblioteca.getChildNodes();
+                                                    for (int m = 0; m < listaCanciones.getLength(); m++) {
+                                                        Node cancion = listaCanciones.item(m);
+                                                        Canciones cancionGuardar = new Canciones("","","","","","","","");
+                                                        if(cancion.getNodeType() == Node.ELEMENT_NODE){
+                                                            Element element3 = (Element) cancion;
+                                                            NodeList datosCanciones = element3.getChildNodes();
+                                                            for (int n = 0; n < datosCanciones.getLength(); n++) {
+                                                                Node datoCanciones = datosCanciones.item(n);
+                                                                if (datoCanciones.getNodeType()==Node.ELEMENT_NODE){
+                                                                    if (datoCanciones.getNodeName().equals("id")){
+                                                                        cancionGuardar.setId(datoCanciones.getTextContent());
+                                                                    }
+                                                                    if (datoCanciones.getNodeName().equals("nombre")){
+                                                                        cancionGuardar.setNombre(datoCanciones.getTextContent());
+                                                                    }
+                                                                    if (datoCanciones.getNodeName().equals("genero")){
+                                                                        cancionGuardar.setGenero(datoCanciones.getTextContent());
+                                                                    }
+                                                                    if (datoCanciones.getNodeName().equals("artista")){
+                                                                        cancionGuardar.setArtista(datoCanciones.getTextContent());
+                                                                    }
+                                                                    if (datoCanciones.getNodeName().equals("album")){
+                                                                        cancionGuardar.setAlbum(datoCanciones.getTextContent());
+                                                                    }
+                                                                    if (datoCanciones.getNodeName().equals("anio")){
+                                                                        cancionGuardar.setAnio(datoCanciones.getTextContent());
+                                                                    }
+                                                                    if (datoCanciones.getNodeName().equals("letra")){
+                                                                        cancionGuardar.setLetra(datoCanciones.getTextContent());
+                                                                    }
+                                                                    if (datoCanciones.getNodeName().equals("path")){
+                                                                        cancionGuardar.setPath(datoCanciones.getTextContent());
+                                                                    }
+                                                                }
+                                                            }
+                                                            listaCancionesGuardar.insertarFinal(cancionGuardar);
+                                                        }
+                                                    }
+                                                    bibliotecaGuardar.setListaDeCanciones(listaCancionesGuardar);
+                                                }
+                                            }
+                                        }
+                                        listaBibliotecaGuardar.insertarFinal(bibliotecaGuardar);
+                                    }
+                                }
+                                usuarioGuardar.setListaDeBibliotecas(listaBibliotecaGuardar);
+                            }
+                        }
+                    }
+                }
+                lista.insertarFinal(usuarioGuardar);
+            }
+            return lista;
+        } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
         }
     }

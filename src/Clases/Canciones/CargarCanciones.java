@@ -24,7 +24,7 @@ public class CargarCanciones {
 
             for (int i = 0; i < listaCanciones.getLength(); i++) {
                 Node cancion = listaCanciones.item(i);
-                Canciones cancionGuardar = new Canciones("","","","","","","");
+                Canciones cancionGuardar = new Canciones("","","","","","","","");
                 if(cancion.getNodeType() == Node.ELEMENT_NODE){
                     Element element = (Element) cancion;
                     NodeList datos = element.getChildNodes();

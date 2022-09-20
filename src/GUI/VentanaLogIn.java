@@ -1,6 +1,8 @@
 package GUI;
 
+import Clases.Usuarios.CargarUsuarios;
 import Clases.Usuarios.ListaSimple;
+import Clases.Usuarios.Usuarios;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,14 +15,31 @@ public class VentanaLogIn{
     private JPanel jPanel;
     private JPasswordField entryContrasena;
     private JFrame jFrame;
+    ListaSimple listaSimpleUsuarios;
 
     public VentanaLogIn() {
+
         initComponents();
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanRegister ventanRegister = new VentanRegister(new ListaSimple());
+                VentanRegister ventanRegister = new VentanRegister(listaSimpleUsuarios);
                 jFrame.setVisible(false);
+            }
+        });
+        logInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Usuarios usuario = listaSimpleUsuarios.buscarCorreo(entryCorreo.getText());
+                if(usuario!=null){
+                    if(usuario.getContrasena().equals(entryContrasena.getText())){
+                        System.out.println("Sesion iniciada");
+                    }else {
+                        JOptionPane.showMessageDialog(null,"Contrasena incorrecta","Datos erroneos",JOptionPane.WARNING_MESSAGE);
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null,"Correo no existe, debe de registrarse","Datos erroneos",JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
     }
@@ -30,5 +49,6 @@ public class VentanaLogIn{
         jFrame.setTitle("LogIn");
         jFrame.pack();
         jFrame.setVisible(true);
+        listaSimpleUsuarios = CargarUsuarios.cargarListaUsuarios();
     }
 }

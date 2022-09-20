@@ -27,6 +27,17 @@ public class ListaSimple {
         }
     }
 
+    public Usuarios buscarCorreo(String correo){
+        Nodo temp = start;
+        while(temp!=null){
+            if (temp.getData().getCorreoElectronico().equals(correo)){
+                return temp.getData();
+            }
+            temp = temp.getNext();
+        }
+        return null;
+    }
+
     public Nodo getStart() {
         return start;
     }

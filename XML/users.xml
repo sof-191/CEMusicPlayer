@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Usuarios>
     <usuario>
-        <email>sof@gmail.com</email>
+        <email>sofia</email>
         <nombre>Sofia</nombre>
         <provincia>San Jose</provincia>
         <contrasena>123</contrasena>
         <bibliotecas>
             <biblioteca>
                 <id>01</id>
-                <id>Canciones</id>
+                <nombre>Canciones</nombre>
                 <canciones>
                     <cancion>
                         <id>01</id>
@@ -16,7 +16,7 @@
                         <genero>Rock Alternativo</genero>
                         <artista>Arctic Monkeys</artista>
                         <album>Leave Before the Lights Come On</album>
-                        <album>2006</album>
+                        <anio>2006</anio>
                         <letra>Baby, I'm yours (baby, I'm yours)
                             And I'll be yours (yours) until the stars fall from the sky
                             Yours (yours) until the rivers all run dry
@@ -47,7 +47,7 @@
                         <genero>Pop</genero>
                         <artista>Bacilos</artista>
                         <album>Caraluna</album>
-                        <album>2002</album>
+                        <anio>2002</anio>
                         <letra>¿Quién dice que no duelen
                             Las huellas en la arena?
                             Tu huella el mar se la llevó
@@ -114,7 +114,7 @@
                         <genero>Alternativa</genero>
                         <artista>BØRNS</artista>
                         <album>Dopamine</album>
-                        <album>2015</album>
+                        <anio>2015</anio>
                         <letra>Candy, she's sweet like candy in my veins
                             Baby, I'm dying for another taste
                             And every night my mind is running around her
@@ -153,7 +153,7 @@
                         <genero>Alternativa</genero>
                         <artista>Capital Cities</artista>
                         <album>Safe and Sound</album>
-                        <album>2011</album>
+                        <anio>2011</anio>
                         <letra>I could lift you up
                             I could show you what you want to see
                             And take you where you want to be
@@ -206,7 +206,7 @@
                         <genero>Reggae</genero>
                         <artista>Chino y Nacho</artista>
                         <album>Viaje a 2016</album>
-                        <album>2021</album>
+                        <anio>2021</anio>
                         <letra>Me delata la mirada
                             Hacerme el tonto para qué
                             Si a mi no me importa nada
@@ -310,7 +310,7 @@
                         <genero>Pop</genero>
                         <artista>Carlos Baute</artista>
                         <album>De mi puño y letra</album>
-                        <album>2008</album>
+                        <anio>2008</anio>
                         <letra>Quizá no fue coincidencia encontrarme contigo
                             Tal vez esto lo hizo el destino
                             Quiero dormirme de nuevo en tu pecho
@@ -366,7 +366,7 @@
             </biblioteca>
             <biblioteca>
                 <id>02</id>
-                <id>Favoritas</id>
+                <nombre>Favoritas</nombre>
                 <canciones/>
             </biblioteca>
         </bibliotecas>

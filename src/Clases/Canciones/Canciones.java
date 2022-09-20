@@ -22,8 +22,9 @@ public class Canciones {
      * @param album album de la cancion
      * @param anio anio de la cancion
      * @param letra letras de la cancion
+     * @param path path de la cancion
      */
-    public Canciones(String id, String nombre, String genero, String artista, String album, String anio, String letra) {
+    public Canciones(String id, String nombre, String genero, String artista, String album, String anio, String letra, String path) {
         this.id = id;
         this.nombre = nombre;
         this.genero = genero;
@@ -31,6 +32,7 @@ public class Canciones {
         this.album = album;
         this.anio = anio;
         this.letra = letra;
+        this.path = path;
     }
 
 
