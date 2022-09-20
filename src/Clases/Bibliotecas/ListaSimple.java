@@ -27,6 +27,25 @@ public class ListaSimple {
         }
     }
 
+    public Bibliotecas eliminarId(String id){
+        Nodo current = this.start ;
+        Nodo previous = this.start ;
+        while ( current != null ) {
+            if (current.getData().getId().equals(id)){
+                if ( current == this.start ) {
+                    this.start = this.start.getNext() ;
+                } else {
+                    previous.setNext(current.getNext());
+                }
+                return current.getData();
+            } else {
+                previous = current;
+                current = current.getNext();
+            }
+        }
+        return null;
+    }
+
     public Nodo getStart() {
         return start;
     }

@@ -1,5 +1,7 @@
 package Clases.Usuarios;
 
+import Clases.Bibliotecas.Bibliotecas;
+
 /***
  * Lista donde se almacenaran las bibliotecas
  */
@@ -37,7 +39,24 @@ public class ListaSimple {
         }
         return null;
     }
-
+    public Usuarios eliminarId(String correo){
+        Nodo current = this.start;
+        Nodo previous = this.start ;
+        while ( current != null ) {
+            if (current.getData().getCorreoElectronico().equals(correo)){
+                if ( current == this.start ) {
+                    this.start = this.start.getNext() ;
+                } else {
+                    previous.setNext(current.getNext());
+                }
+                return current.getData();
+            } else {
+                previous = current;
+                current = current.getNext();
+            }
+        }
+        return null;
+    }
     public Nodo getStart() {
         return start;
     }

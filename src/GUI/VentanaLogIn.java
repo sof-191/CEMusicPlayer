@@ -33,7 +33,8 @@ public class VentanaLogIn{
                 Usuarios usuario = listaSimpleUsuarios.buscarCorreo(entryCorreo.getText());
                 if(usuario!=null){
                     if(usuario.getContrasena().equals(entryContrasena.getText())){
-                        System.out.println("Sesion iniciada");
+                        VentanaBibliotecas ventanaBibliotecas = new VentanaBibliotecas(listaSimpleUsuarios,entryCorreo.getText());
+                        jFrame.setVisible(false);
                     }else {
                         JOptionPane.showMessageDialog(null,"Contrasena incorrecta","Datos erroneos",JOptionPane.WARNING_MESSAGE);
                     }
