@@ -26,4 +26,20 @@ public class ListaSimple {
             this.last = last.getNext();
         }
     }
+
+    public Nodo getStart() {
+        return start;
+    }
+
+    public void setStart(Nodo start) {
+        this.start = start;
+    }
+
+    public Nodo getLast() {
+        return last;
+    }
+
+    public void setLast(Nodo last) {
+        this.last = last;
+    }
 }

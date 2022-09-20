@@ -11,6 +11,7 @@ public class Canciones {
     private String album;
     private String anio;
     private String letra;
+    private String path;
 
     /***
      * Clase constructora de Canciones
@@ -87,5 +88,13 @@ public class Canciones {
 
     public void setLetra(String letra) {
         this.letra = letra;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

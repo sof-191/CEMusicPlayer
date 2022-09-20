@@ -1,5 +1,7 @@
 package GUI;
 
+import Clases.Usuarios.ListaSimple;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +19,7 @@ public class VentanaLogIn{
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanRegister ventanRegister = new VentanRegister();
+                VentanRegister ventanRegister = new VentanRegister(new ListaSimple());
                 jFrame.setVisible(false);
             }
         });

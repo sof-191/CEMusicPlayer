@@ -33,4 +33,11 @@ public class ListaDobleEnlazada {
         }
     }
 
+    public Nodo getStart() {
+        return start;
+    }
+
+    public void setStart(Nodo start) {
+        this.start = start;
+    }
 }
