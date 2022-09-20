@@ -24,6 +24,10 @@ public class ListaSimple {
             this.start=nuevo;
             this.last=nuevo;
         }else {
+            this.last = start;
+            while (last.getNext()!=null){
+                last = last.getNext();
+            }
             this.last.setNext(nuevo);
             this.last = last.getNext();
         }
@@ -39,7 +43,7 @@ public class ListaSimple {
         }
         return null;
     }
-    public Usuarios eliminarId(String correo){
+    public Usuarios eliminarCorreo(String correo){
         Nodo current = this.start;
         Nodo previous = this.start ;
         while ( current != null ) {

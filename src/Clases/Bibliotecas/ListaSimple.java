@@ -22,9 +22,23 @@ public class ListaSimple {
             this.start=nuevo;
             this.last=nuevo;
         }else {
+            this.last = start;
+            while (last.getNext()!=null){
+                last = last.getNext();
+            }
             this.last.setNext(nuevo);
             this.last = last.getNext();
         }
+    }
+    public Bibliotecas buscarId(String id){
+        Nodo temp =getStart();
+        while (temp!=null){
+            if(temp.getData().getId().equals(id)){
+                return temp.getData();
+            }
+            temp = temp.getNext();
+        }
+        return null;
     }
 
     public Bibliotecas eliminarId(String id){

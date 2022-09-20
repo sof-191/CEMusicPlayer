@@ -32,11 +32,21 @@ public class VentanaBibliotecas {
                     ListaSimple nuevaLista = usuario.getListaDeBibliotecas();
                     if (nuevaLista.eliminarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))) != null) {
                         usuario.setListaDeBibliotecas(nuevaLista);
-                        listaUsuarios.eliminarId(usuario.getCorreoElectronico());
+                        listaUsuarios.eliminarCorreo(usuario.getCorreoElectronico());
                         listaUsuarios.insertarFinal(usuario);
                         CargarUsuarios.guardarListaUsuarios(listaUsuarios);
                         actualizarTabla(usuario.getListaDeBibliotecas());
                     }
+                }
+
+            }
+        });
+        editarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))) != null) {
+                    VentanaEditarBiblioteca ventanaEditarBiblioteca = new VentanaEditarBiblioteca(listaUsuarios,usuario, usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))));
+                    jFrame.setVisible(false);
                 }
 
             }

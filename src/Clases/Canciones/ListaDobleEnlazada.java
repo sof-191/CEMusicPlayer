@@ -33,6 +33,19 @@ public class ListaDobleEnlazada {
         }
     }
 
+    public Canciones buscarId(String id){
+        Nodo temp = this.start;
+
+        do {
+            if (temp.getData().getId().equals(id)){
+                return temp.getData();
+            }
+            temp = temp.getNext();
+        }while (temp!=start);
+
+        return null;
+    }
+
     public Nodo getStart() {
         return start;
     }

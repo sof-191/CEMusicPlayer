@@ -13,6 +13,7 @@ public class Nodo {
      */
     public Nodo(Bibliotecas data) {
         this.data = data;
+        this.next = null;
     }
 
     public Bibliotecas getData() {
