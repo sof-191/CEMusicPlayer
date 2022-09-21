@@ -51,6 +51,13 @@ public class VentanaBibliotecas {
 
             }
         });
+        reproducirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaReproducirMusica ventanaReproducirMusica = new VentanaReproducirMusica(usuario,listaUsuarios,usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))));
+                jFrame.setVisible(false);
+            }
+        });
     }
 
     private void initComponents() {
