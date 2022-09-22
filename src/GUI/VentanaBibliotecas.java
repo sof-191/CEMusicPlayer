@@ -3,6 +3,7 @@ package GUI;
 import Clases.Bibliotecas.Bibliotecas;
 import Clases.Bibliotecas.ListaSimple;
 import Clases.Bibliotecas.Nodo;
+import Clases.Canciones.ListaDobleEnlazada;
 import Clases.Usuarios.CargarUsuarios;
 import Clases.Usuarios.Usuarios;
 
@@ -17,9 +18,11 @@ public class VentanaBibliotecas {
     private JButton editarButton;
     private JButton eliminarButton;
     private JPanel jPanel;
+    private JButton agregarButton;
     private JFrame jFrame;
     private Usuarios usuario;
-    Clases.Usuarios.ListaSimple listaUsuarios;
+    private Clases.Usuarios.ListaSimple listaUsuarios;
+    private int lastId;
 
     public VentanaBibliotecas(Clases.Usuarios.ListaSimple lista, String correo) {
         this.listaUsuarios = lista;
@@ -51,6 +54,26 @@ public class VentanaBibliotecas {
 
             }
         });
+        agregarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ListaSimple nuevaLista = usuario.getListaDeBibliotecas();
+                String id = "";
+                if (lastId+1<9){
+                    id = "0";
+                }
+                id += String.valueOf(lastId+1);
+
+                nuevaLista.insertarFinal(new Bibliotecas(id,"Nueva Playlist",new ListaDobleEnlazada()));
+                usuario.setListaDeBibliotecas(nuevaLista);
+                listaUsuarios.eliminarCorreo(usuario.getCorreoElectronico());
+                listaUsuarios.insertarFinal(usuario);
+                CargarUsuarios.guardarListaUsuarios(listaUsuarios);
+                actualizarTabla(usuario.getListaDeBibliotecas());
+                VentanaEditarBiblioteca ventanaEditarBiblioteca = new VentanaEditarBiblioteca(listaUsuarios,usuario,usuario.getListaDeBibliotecas().buscarId(id));
+                jFrame.setVisible(false);
+            }
+        });
     }
 
     private void initComponents() {
@@ -70,8 +93,11 @@ public class VentanaBibliotecas {
         defaultTableModel.addColumn("Nombre");
 
         Nodo temp = biblioteca.getStart();
-
+        lastId = Integer.parseInt(temp.getData().getId());
         while (temp!=null){
+            if (lastId < Integer.parseInt(temp.getData().getId()) ){
+                lastId = Integer.parseInt(temp.getData().getId());
+            }
             defaultTableModel.addRow(new Object[]{temp.getData().getId(),temp.getData().getNombre()});
             temp=temp.getNext();
         }
