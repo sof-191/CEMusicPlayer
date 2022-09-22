@@ -3,6 +3,7 @@ package GUI;
 import Clases.Bibliotecas.Bibliotecas;
 import Clases.Bibliotecas.ListaSimple;
 import Clases.Bibliotecas.Nodo;
+import Clases.Canciones.ListaDobleEnlazada;
 import Clases.Usuarios.CargarUsuarios;
 import Clases.Usuarios.Usuarios;
 
@@ -17,9 +18,11 @@ public class VentanaBibliotecas {
     private JButton editarButton;
     private JButton eliminarButton;
     private JPanel jPanel;
+    private JButton agregarButton;
     private JFrame jFrame;
     private Usuarios usuario;
-    Clases.Usuarios.ListaSimple listaUsuarios;
+    private Clases.Usuarios.ListaSimple listaUsuarios;
+    private int lastId;
 
     public VentanaBibliotecas(Clases.Usuarios.ListaSimple lista, String correo) {
         this.listaUsuarios = lista;
@@ -28,7 +31,7 @@ public class VentanaBibliotecas {
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)).equals("01")&&!String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)).equals("02")){
+                if (!String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)).equals("01") && !String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)).equals("02")) {
                     ListaSimple nuevaLista = usuario.getListaDeBibliotecas();
                     if (nuevaLista.eliminarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))) != null) {
                         usuario.setListaDeBibliotecas(nuevaLista);
@@ -45,7 +48,7 @@ public class VentanaBibliotecas {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))) != null) {
-                    VentanaEditarBiblioteca ventanaEditarBiblioteca = new VentanaEditarBiblioteca(listaUsuarios,usuario, usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))));
+                    VentanaEditarBiblioteca ventanaEditarBiblioteca = new VentanaEditarBiblioteca(listaUsuarios, usuario, usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))));
                     jFrame.setVisible(false);
                 }
 
@@ -54,7 +57,27 @@ public class VentanaBibliotecas {
         reproducirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaReproducirMusica ventanaReproducirMusica = new VentanaReproducirMusica(usuario,listaUsuarios,usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))));
+                VentanaReproducirMusica ventanaReproducirMusica = new VentanaReproducirMusica(usuario, listaUsuarios, usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))));
+            }
+        });
+        agregarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ListaSimple nuevaLista = usuario.getListaDeBibliotecas();
+                String id = "";
+                if (lastId + 1 < 9) {
+                    id = "0";
+                }
+                id += String.valueOf(lastId + 1);
+
+                nuevaLista.insertarFinal(new Bibliotecas(id, "Nueva Playlist", new ListaDobleEnlazada()));
+                usuario.setListaDeBibliotecas(nuevaLista);
+                listaUsuarios.eliminarCorreo(usuario.getCorreoElectronico());
+                listaUsuarios.insertarFinal(usuario);
+                CargarUsuarios.guardarListaUsuarios(listaUsuarios);
+                actualizarTabla(usuario.getListaDeBibliotecas());
+                VentanaEditarBiblioteca ventanaEditarBiblioteca = new VentanaEditarBiblioteca(listaUsuarios, usuario, usuario.getListaDeBibliotecas().buscarId(id));
+
                 jFrame.setVisible(false);
             }
         });
@@ -69,18 +92,23 @@ public class VentanaBibliotecas {
         jFrame.setVisible(true);
     }
 
-    private void actualizarTabla(ListaSimple biblioteca){
-        DefaultTableModel defaultTableModel = new DefaultTableModel(){
-            public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+    private void actualizarTabla(ListaSimple biblioteca) {
+        DefaultTableModel defaultTableModel = new DefaultTableModel() {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
         };
         defaultTableModel.addColumn("Id");
         defaultTableModel.addColumn("Nombre");
 
         Nodo temp = biblioteca.getStart();
-
-        while (temp!=null){
-            defaultTableModel.addRow(new Object[]{temp.getData().getId(),temp.getData().getNombre()});
-            temp=temp.getNext();
+        lastId = Integer.parseInt(temp.getData().getId());
+        while (temp != null) {
+            if (lastId < Integer.parseInt(temp.getData().getId())) {
+                lastId = Integer.parseInt(temp.getData().getId());
+            }
+            defaultTableModel.addRow(new Object[]{temp.getData().getId(), temp.getData().getNombre()});
+            temp = temp.getNext();
         }
         table1.setModel(defaultTableModel);
     }
