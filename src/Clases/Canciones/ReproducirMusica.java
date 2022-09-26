@@ -48,10 +48,12 @@ public class ReproducirMusica {
         mediaPlayer.play();
     }
     public void Siguiente(){
+        mediaPlayer.pause();
         temp = temp.getNext();
         cargarBiblioteca();
     }
     public void Anterior(){
+        mediaPlayer.pause();
         temp = temp.getPrev();
         cargarBiblioteca();
     }
