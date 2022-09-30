@@ -32,7 +32,11 @@ public class ListaSimple {
             this.last = last.getNext();
         }
     }
-
+    /***
+     * Método que permite saber si un correo existe o no
+     * @param correo característica de un usuario
+     * @return
+     */
     public Usuarios buscarCorreo(String correo){
         Nodo temp = start;
         while(temp!=null){
@@ -43,6 +47,11 @@ public class ListaSimple {
         }
         return null;
     }
+    /***
+     * Método para eliminar un usuario
+     * @param correo
+     * @return
+     */
     public Usuarios eliminarCorreo(String correo){
         Nodo current = this.start;
         Nodo previous = this.start ;

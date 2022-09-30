@@ -30,6 +30,10 @@ public class VentanaEditarBiblioteca {
     private Bibliotecas biblioteca;
     private ListaDobleEnlazada listaCanciones;
 
+    /***
+     * Método que evita que la columna de ID pueda ser editable.
+     */
+
     private DefaultTableModel defaultTableModel = new DefaultTableModel(){
         public boolean isCellEditable(int rowIndex,int columnIndex){
             if (columnIndex == 0){
@@ -38,25 +42,39 @@ public class VentanaEditarBiblioteca {
             return true;
         }
     };
-
+    /***
+     * Método que abre la ventana de editar y permite que las canciones y las bibliotecas editadas se guarden bien en la lista de bibliotecas y despues en la lista de los usuarios
+     * @param listaUsuarios lista de usuarios para que la modificación en la biblioteca quede guardada en su respectivo lugar
+     * @param usuario usuario al que le corresponde la modificación
+     * @param biblioteca biblioteca a editar
+     */
     public VentanaEditarBiblioteca(ListaSimple listaUsuarios, Usuarios usuario, Bibliotecas biblioteca) {
         this.listaUsuarios = listaUsuarios;
         this.usuario = usuario;
         this.biblioteca = biblioteca;
         this.listaBibliotecas = this.usuario.getListaDeBibliotecas();
         initComponents();
+        /***
+         * Método para guardar los cambios en la biblioteca (que esta abajo)
+         */
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardarBiblioteca();
             }
         });
+        /***
+         * Método para eliminar una canción
+         */
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 defaultTableModel.removeRow(table1.getSelectedRow());
             }
         });
+        /***
+         * Método para regresar a la ventana de bibliotecas
+         */
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +82,10 @@ public class VentanaEditarBiblioteca {
                 jFrame.setVisible(false);
             }
         });
-
+        /***
+         * Método para agregar una canción
+         * https://stackoverflow.com/questions/51496151/addrow-method-in-defaulttablemodel-is-not-adding-rows
+         */
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,6 +99,10 @@ public class VentanaEditarBiblioteca {
             }
         });
     }
+    /***
+     * Método que permite desplegar las canciones en el combobox
+     * https://www.youtube.com/watch?v=1cEcR4lEoG8
+     */
     public void initComponents(){
         textField1.setText(this.biblioteca.getNombre());
         jFrame = new JFrame();
@@ -100,7 +125,10 @@ public class VentanaEditarBiblioteca {
             }while (temp!=inicio);
         }
     }
-
+    /***
+     * Método actualiza la lista de canciones en la biblioteca
+     * @param canciones la listade canciones en la biblioteca
+     */
     private void actualizarTabla(Clases.Canciones.ListaDobleEnlazada canciones){
         defaultTableModel = new DefaultTableModel(){
             public boolean isCellEditable(int rowIndex,int columnIndex){
@@ -130,7 +158,9 @@ public class VentanaEditarBiblioteca {
 
         table1.setModel(defaultTableModel);
     }
-
+    /***
+     * Método que permite guardar los cambios realizar cambios en la biblioteca
+     */
     public void guardarBiblioteca(){
         Clases.Canciones.ListaDobleEnlazada listaGuadar = new ListaDobleEnlazada();
         for (int i = 0; i < table1.getRowCount(); i++) {

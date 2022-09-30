@@ -42,6 +42,12 @@ public class VentanaReproducirMusica {
 
     private boolean continua = false;
 
+    /***
+     * Método que muestra la ventana de reproducir música
+     * @param usuario a elegir
+     * @param listaUsuarios a elegir
+     * @param biblioteca a elegir para reproducir
+     */
     public VentanaReproducirMusica(Usuarios usuario, ListaSimple listaUsuarios, Bibliotecas biblioteca) {
         this.usuario = usuario;
         this.listaUsuarios = listaUsuarios;
@@ -119,7 +125,6 @@ public class VentanaReproducirMusica {
                 if (conexion.isMessageAvailable()) {
                     String dato = conexion.printMessage();
                     Orden(dato);
-                    //TextArea.append(dato + "\n");
                 }
             } catch (SerialPortException e) {
                 throw new RuntimeException(e);
@@ -174,30 +179,32 @@ public class VentanaReproducirMusica {
                     break;
                 }
                 case "1": {
-                    mediaPlayer.setVolume(20);
+                    mediaPlayer.setVolume(0.2);
                     break;
                 }
                 case "2": {
-                    mediaPlayer.setVolume(40);
+                    mediaPlayer.setVolume(0.4);
                     break;
                 }
                 case "3": {
-                    mediaPlayer.setVolume(60);
+                    mediaPlayer.setVolume(0.6);
                     break;
                 }
                 case "4": {
-                    mediaPlayer.setVolume(80);
+                    mediaPlayer.setVolume(0.8);
                     break;
                 }
                 case "5": {
-                    mediaPlayer.setVolume(100);
+                    mediaPlayer.setVolume(1);
                     break;
                 }
             }
         }
     };
 
-
+    /***
+     * Método que eprmite mostrar la ventana de reproducir música
+     */
     private void initComponents() {
         jFrame = new JFrame();
         jFrame.setContentPane(jPanel);
@@ -212,7 +219,9 @@ public class VentanaReproducirMusica {
 
 
     }
-
+    /***
+     * Método que permite cargar canciones de las bibliotecas
+     */
     private void cargarBiblioteca() {
 
         String path = "Canciones/" + temp.getData().getPath();
@@ -229,27 +238,46 @@ public class VentanaReproducirMusica {
             }
         });
         Reproducir();
-
     }
+    /***
+     * Método que permite reproducir la cancion
+     * https://www.youtube.com/watch?v=CXq2Iw1gQCQ
+     */
     public void Reproducir(){
         mediaPlayer.play();
     }
+    /***
+     * Método para pasar a la siguiente canción
+     */
     public void Siguiente(){
         mediaPlayer.stop();
         temp = temp.getNext();
         cargarBiblioteca();
     }
+    /***
+     * Metodo para retroceder en la playlist
+     */
     public void Anterior(){
         mediaPlayer.stop();
         temp = temp.getPrev();
         cargarBiblioteca();
     }
+    /***
+     * Metodo para pausar una canción
+     */
     public void Pausar(){
         mediaPlayer.pause();
     }
+    /***
+     * Metodo para poner el modo de reproducción en reproducción continua
+     */
     public void cambiarContinua(){
         this.continua = !continua;
     }
+    /***
+     * Obtiene la data de la canción
+     * @return permite que la canción que sigue se reproduzca
+     */
     public String getCancion(){
         return temp.getData().getNombre();
     }

@@ -17,8 +17,11 @@ import java.io.IOException;
 
 public class CargarUsuarios {
     public static void guardarListaUsuarios(Clases.Usuarios.ListaSimple listaSimpleUsuarios){
-
-
+        /***
+         * https://www.tabnine.com/code/java/methods/javax.xml.parsers.DocumentBuilderFactory/newInstance
+         * http://www.javased.com/index.php?api=javax.xml.parsers.DocumentBuilderFactory
+         * https://gist.github.com/bzdgn/1787e7ce85eafd65b66a
+         */
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();

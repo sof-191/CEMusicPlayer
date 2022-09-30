@@ -30,6 +30,13 @@ public class ListaSimple {
             this.last = last.getNext();
         }
     }
+
+    /***
+     * Método que permite poder cargar las bibliotecas con un id en específico
+     * @param id id de una biblioteca en especifico
+     * @return
+     */
+
     public Bibliotecas buscarId(String id){
         Nodo temp =getStart();
         while (temp!=null){
@@ -40,7 +47,11 @@ public class ListaSimple {
         }
         return null;
     }
-
+    /***
+     * Método que permite eliminar un id
+     * @param id id de una biblioteca en especifico
+     * @return
+     */
     public Bibliotecas eliminarId(String id){
         Nodo current = this.start ;
         Nodo previous = this.start ;

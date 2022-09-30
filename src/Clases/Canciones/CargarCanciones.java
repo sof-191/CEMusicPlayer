@@ -15,6 +15,10 @@ import java.io.IOException;
 public class CargarCanciones {
 
     public static ListaDobleEnlazada leerListaCanciones(){
+        /***
+         * https://www.tabnine.com/code/java/methods/javax.xml.parsers.DocumentBuilderFactory/newInstance
+         * http://www.javased.com/index.php?api=javax.xml.parsers.DocumentBuilderFactory
+         */
         ListaDobleEnlazada listaDobleEnlazadaGuardar = new ListaDobleEnlazada();
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

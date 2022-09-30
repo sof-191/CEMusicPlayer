@@ -30,6 +30,9 @@ public class VentanaBibliotecas {
         initComponents();
         eliminarButton.addActionListener(new ActionListener() {
             @Override
+            /***
+             * Método que evita que se puedan borrar las biblioteca de canciones y favoritas. Y que cuando se borra una lista , el cambio se guarde en la lista simple de las bibliotecas de dicho usuario.
+             */
             public void actionPerformed(ActionEvent e) {
                 if (!String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)).equals("01") && !String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)).equals("02")) {
                     ListaSimple nuevaLista = usuario.getListaDeBibliotecas();
@@ -44,6 +47,9 @@ public class VentanaBibliotecas {
 
             }
         });
+        /***
+         * Método que cierra la ventana de bibliotecas y me tira a la de editar bibliotecas.
+         */
         editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,6 +60,9 @@ public class VentanaBibliotecas {
 
             }
         });
+        /***
+         * Método que me cierra la ventana de bibliotecas y me tira a la de reproducir música
+         */
         reproducirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +70,9 @@ public class VentanaBibliotecas {
                 jFrame.setVisible(false);
             }
         });
+        /***
+         * Método que agrega una playlista a la lista de playlist de un usuario en específico.
+         */
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,7 +90,9 @@ public class VentanaBibliotecas {
                 CargarUsuarios.guardarListaUsuarios(listaUsuarios);
                 actualizarTabla(usuario.getListaDeBibliotecas());
                 VentanaEditarBiblioteca ventanaEditarBiblioteca = new VentanaEditarBiblioteca(listaUsuarios, usuario, usuario.getListaDeBibliotecas().buscarId(id));
-
+/***
+ * Esconde la ventana de bibliotecas y me muestra la de ediatr biblioteca
+ */
                 jFrame.setVisible(false);
             }
         });
@@ -94,6 +108,11 @@ public class VentanaBibliotecas {
     }
 
     private void actualizarTabla(ListaSimple biblioteca) {
+        /***
+         * https://stackoverflow.com/questions/12405605/using-custom-tablemodel-make-iscelleditable-true-for-a-particular-row-on-button
+         * https://docs.oracle.com/javase/8/docs/api/javax/swing/JTable.html
+         * Médoto para poder editar las celdas que contienen las información de las canciones menos la de ID.
+         */
         DefaultTableModel defaultTableModel = new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;

@@ -16,13 +16,18 @@ public class VentanaLogIn{
     private JPasswordField entryContrasena;
     private JFrame jFrame;
     ListaSimple listaSimpleUsuarios;
-
+    /***
+     * Método para mostrar la ventana del logIn.
+     */
     public VentanaLogIn() {
 
         initComponents();
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /***
+                 * Método para ir a la ventana de registrarse
+                 */
                 VentanRegister ventanRegister = new VentanRegister(listaSimpleUsuarios);
                 jFrame.setVisible(false);
             }
@@ -30,6 +35,9 @@ public class VentanaLogIn{
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /***
+                 * Método que permite verificar si el correo existe, si el correo y la contraseña son iguales y si se puede entrar a las bibliotecas o tirar error.
+                 */
                 Usuarios usuario = listaSimpleUsuarios.buscarCorreo(entryCorreo.getText());
                 if(usuario!=null){
                     if(usuario.getContrasena().equals(entryContrasena.getText())){
@@ -44,6 +52,9 @@ public class VentanaLogIn{
             }
         });
     }
+    /***
+     * Método para mostrar ventana de logIn con la lista de usuarios cargada..
+     */
     public void initComponents() {
         jFrame = new JFrame();
         jFrame.setContentPane(jPanel);

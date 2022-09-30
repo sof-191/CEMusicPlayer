@@ -2,6 +2,7 @@ package Clases.Usuarios;
 
 import Clases.Bibliotecas.ListaSimple;
 
+
 public class Usuarios {
     private String correoElectronico;
     private String nombre;
