@@ -31,7 +31,6 @@ public class VentanaReproducirMusica {
     private JButton subirVolumenButton;
     private JPanel jPanel;
     private JButton regresarButton;
-
     private JButton favoritaButton;
     private JFrame jFrame;
     private Usuarios usuario;

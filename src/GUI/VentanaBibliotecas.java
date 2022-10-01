@@ -58,6 +58,7 @@ public class VentanaBibliotecas {
             @Override
             public void actionPerformed(ActionEvent e) {
                 VentanaReproducirMusica ventanaReproducirMusica = new VentanaReproducirMusica(usuario, listaUsuarios, usuario.getListaDeBibliotecas().buscarId(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0))));
+                jFrame.setVisible(false);
             }
         });
         agregarButton.addActionListener(new ActionListener() {
