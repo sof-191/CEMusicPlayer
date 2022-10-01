@@ -187,7 +187,7 @@ public class VentanaReproducirMusica {
                     break;
                 }
                 case "3": {
-                    mediaPlayer.setVolume(0.6);
+                    mediaPlayer.setVolume(0.5);
                     break;
                 }
                 case "4": {

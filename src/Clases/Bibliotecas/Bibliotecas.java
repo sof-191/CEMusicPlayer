@@ -3,7 +3,7 @@ package Clases.Bibliotecas;
 import Clases.Canciones.ListaDobleEnlazada;
 
 /***
- * Clase donde se almacenaran las bibliotecas
+ * Clase donde se almacenaran las bibliotecas creadas
  */
 public class Bibliotecas {
     private String fecha;
